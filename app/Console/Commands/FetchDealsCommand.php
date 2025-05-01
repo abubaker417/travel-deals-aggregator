@@ -3,9 +3,18 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\DealService;
 
 class FetchDealsCommand extends Command
 {
+    protected DealService $dealService;
+
+    public function __construct(DealService $dealService)
+    {
+        parent::__construct();
+        $this->dealService = $dealService;
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -26,6 +35,7 @@ class FetchDealsCommand extends Command
     public function handle()
     {
         $this->info('Fetching deals...');
+        $this->dealService->fetchAndStoreDeals();
         $this->info('Deals fetched successfully.');
     }
 }
