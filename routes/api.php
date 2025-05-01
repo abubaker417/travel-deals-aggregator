@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/deals', [DealController::class, 'index']);
+    Route::get('/deals/{id}', [DealController::class, 'show']);
+    Route::post('/deals/{id}/bookmark', [DealController::class, 'bookmark']);
+    Route::get('/user/bookmarks', [DealController::class, 'userBookmarks']);
 });
