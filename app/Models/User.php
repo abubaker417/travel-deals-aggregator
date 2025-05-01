@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_verified_at'
     ];
 
     /**
@@ -42,4 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Deal::class, 'book_marks', 'user_id', 'deal_id')
+                    ->withTimestamps();
+    }
 }
