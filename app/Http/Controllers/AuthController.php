@@ -20,7 +20,7 @@ class AuthController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;;
+        $token = $user->createToken('auth_token')->accessToken;
 
         return response()->json([
             'user' => $user,
@@ -36,7 +36,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;;
+        $token = $user->createToken('auth_token')->accessToken;
 
         return response()->json([
             'user' => $user,
@@ -46,7 +46,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $user = auth()->user();
+        $user = auth('api')->user();
         if ($user) {
             $user->tokens()->delete();
             return response()->json(['message' => 'Logged out']);
