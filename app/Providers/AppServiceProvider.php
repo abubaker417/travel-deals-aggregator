@@ -12,7 +12,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Schema::defaultStringLength(191);
+        $this->app->bind(
+            \App\Repositories\DealRepositoryInterface::class,
+            \App\Repositories\DealRepository::class
+        );        
     }
 
     /**
@@ -20,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Schema::defaultStringLength(191);
     }
 }

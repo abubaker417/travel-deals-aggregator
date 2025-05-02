@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Repositories\DealRepository;
+use App\Repositories\DealRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\FetchAndStoreDealsJob;
 
 class DealService
 {
-    protected DealRepository $dealRepository;
+    protected DealRepositoryInterface $dealRepository;
 
-    public function __construct(DealRepository $dealRepository)
+    public function __construct(DealRepositoryInterface $dealRepository)
     {
         $this->dealRepository = $dealRepository;
     }

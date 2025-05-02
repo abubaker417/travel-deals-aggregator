@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Deal;
+use App\Repositories\DealRepositoryInterface;
 
-class DealRepository
+class DealRepository implements DealRepositoryInterface
 {
     public function create(array $data): Deal
     {

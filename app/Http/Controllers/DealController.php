@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\DealService;
-use App\Repositories\DealRepository;
+use App\Repositories\DealRepositoryInterface;
 
 class DealController extends Controller
 {
     protected DealService $dealService;
-    protected DealRepository $dealRepository;
+    protected DealRepositoryInterface $dealRepository;
 
-    public function __construct(DealService $dealService, DealRepository $dealRepository)
+    public function __construct(DealService $dealService, DealRepositoryInterface $dealRepository)
     {
         $this->dealService = $dealService;
         $this->dealRepository = $dealRepository;
@@ -31,7 +31,7 @@ class DealController extends Controller
 
     public function bookmark(int $id)
     {
-        $userId = auth()->id();
+        $userId = auth('api')->id();
         $result = $this->dealService->bookmarkDeal($id, $userId);
 
         return response()->json([
@@ -41,7 +41,9 @@ class DealController extends Controller
 
     public function userBookmarks()
     {
-        $bookmarks = $this->dealRepository->getUserBookmarks(auth()->id());
+        $userId = auth('api')->id();
+        \Log::info('Fetching bookmarks for user ID: ' . $userId);
+        $bookmarks = $this->dealRepository->getUserBookmarks($userId);
         return response()->json(['bookmarks' => $bookmarks]);
     }
 }
